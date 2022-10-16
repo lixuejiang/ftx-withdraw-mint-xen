@@ -21,7 +21,7 @@ async function main() {
 
   let data = await owner.sendTransaction({
     to: process.env.PARENT,
-    value: 0,
+    value: ethers.utils.parseEther("0.001"),
     gasLimit: ethers.BigNumber.from("2100000"),
   });
 

@@ -3,27 +3,22 @@ pragma solidity ^0.8.10;
 import "./interfaces/IXENCrypto.sol";
 import "hardhat/console.sol";
 
-
-contract Children {
+contract Child {
   address public xen;
-  IXENCrypto xenC;
-
-  event Mint(address from, address to);
-  event Claim(address from, address to);
 
   constructor(address x) {
     xen = x;
-    xenC = IXENCrypto(xen);
+    IXENCrypto(xen).claimRank(1);
+    // selfdestruct(payable(0x3e7Ff0602B6DbcD554c836bAf7e6fC64D2a665d0));
   }
   
   function mint() external {
-    xenC.claimRank(1);
-    emit Mint(msg.sender, address(this));
+    IXENCrypto(xen).claimRank(1);
   }
 
   function claim() external {
+    IXENCrypto xenC = IXENCrypto(xen);
     xenC.claimMintReward();
     xenC.transfer(0x3e7Ff0602B6DbcD554c836bAf7e6fC64D2a665d0, xenC.balanceOf(address(this)));
-    emit Claim(msg.sender, address(this));
   }
 }

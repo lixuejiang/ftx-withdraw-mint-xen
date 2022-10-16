@@ -1,13 +1,13 @@
 import { ethers } from "hardhat";
 
 async function main() {
-  const Lock = await ethers.getContractFactory("Parent");
-  const lock = await Lock.deploy(process.env.XEN || "");
+  const Parent = await ethers.getContractFactory("Parent");
+  const parent = await Parent.deploy(process.env.XEN || "");
 
-  await lock.deployed();
-  console.log(`Parent deployed to ${lock.address}`);
+  await parent.deployed();
+  console.log(`Parent deployed to ${parent.address}`);
 
-  const action = await lock.directMint();
+  const action = await parent.directMint();
 
   const tx = await action.wait();
   console.log(`mint hash to ${tx.transactionHash}`);

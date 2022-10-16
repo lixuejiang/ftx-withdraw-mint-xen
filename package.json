@@ -13,6 +13,7 @@
     "block-number": "npx hardhat block-number",
     "deploy": "npx hardhat run scripts/deploy.ts",
     "parent": "npx hardhat run scripts/03_deploy_parent.ts  --network bsc",
+    "mp": "npx hardhat run scripts/03_deploy_parent.ts  --network mainnet",
     "test": "npx hardhat test",
     "coverage": "npx hardhat coverage",
     "account": "npx hardhat accounts",

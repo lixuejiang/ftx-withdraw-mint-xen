@@ -22,15 +22,15 @@ describe("Xen", function () {
   }
 
   describe("Deployment", function () {
-    it("Should has one children", async function () {
+    it("Should has 0 children", async function () {
       const { xen, parent } = await loadFixture(deployOneYearLockFixture);
-
-      expect(await parent.getChildrenLength()).to.equal(1);
+      console.log("parent address", parent.address);
+      expect(parent.address.length).to.gt(0);
     });
   });
 
   describe("sender", function () {
-    it("Should has 11 children", async function () {
+    it("Should has 1 time", async function () {
       const { xen, parent } = await loadFixture(deployOneYearLockFixture);
       const [owner] = await ethers.getSigners();
       const result = await owner.sendTransaction({
@@ -39,14 +39,32 @@ describe("Xen", function () {
         gasLimit: 21000000,
       });
       // console.log(result);
-      const length = (await parent.getChildrenLength()).toNumber();
-      console.log(`length is ${length}`);
-      expect(length).to.equal(11);
+      const times = (await parent.times()).toNumber();
+      console.log(`times is ${times}`);
+      expect(times).to.equal(1);
+    });
+    it("Should has ten address", async function () {
+      const { xen, parent } = await loadFixture(deployOneYearLockFixture);
+      const [owner] = await ethers.getSigners();
+      const result = await owner.sendTransaction({
+        to: parent.address,
+        value: ethers.utils.parseEther("0.001"),
+        gasLimit: 21000000,
+      });
+      // console.log(result);
+      const times = (await parent.times()).toNumber();
+      console.log(`times is ${times}`);
+      expect(times).to.equal(1);
+      for (let index = 0; index < 10; index++) {
+        const address = await parent.calculateAddr(0, index);
+        console.log("address", address);
+        expect(address.length).to.gt(0);
+      }
     });
   });
 
   describe("claim", function () {
-    it("Should has 11 children", async function () {
+    it("Should with draw success", async function () {
       const { xen, parent } = await loadFixture(deployOneYearLockFixture);
       const [owner] = await ethers.getSigners();
       const result = await owner.sendTransaction({

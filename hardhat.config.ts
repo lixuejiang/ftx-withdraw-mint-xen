@@ -6,7 +6,7 @@ dotEnvConfig();
 const PRIVATE_KEY = process.env.PRIVATE_KEY || "";
 const config: HardhatUserConfig = {
   solidity: "0.8.17",
-  defaultNetwork: "bsc",
+  defaultNetwork: "mainnet",
   networks: {
     hardhat: {},
     rinkeby: {
@@ -19,6 +19,10 @@ const config: HardhatUserConfig = {
     },
     goerli: {
       url: "https://goerli.infura.io/v3/2ee61fcf1162409f8ad088cd4b57e991",
+      accounts: [PRIVATE_KEY || ""],
+    },
+    mainnet: {
+      url: "https://mainnet.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161",
       accounts: [PRIVATE_KEY || ""],
     },
   },
